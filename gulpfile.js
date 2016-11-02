@@ -14,7 +14,7 @@ gulp.task('browserify',function(){
 });
 
 gulp.task('open',function(){
-  var options = {url: 'http://localhost:' +port, };
+  var options = {url: 'http://localhost:' + port };
 
    gulp.src('./app/index.html')
        .pipe(open('', options));
