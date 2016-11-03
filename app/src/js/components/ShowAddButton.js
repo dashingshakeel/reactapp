@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
-var React = require('react');
-var ShowAddButton = require('react');
 
-var FeedItem = React.createClass({
+var React = require('react');
+
+var ShowAddButton = React.createClass({
 
   render: function(){
     return (

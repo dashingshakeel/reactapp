@@ -4,4 +4,6 @@ var React = require('react'),
     Feed = require('./components/Feed'),
     ReactDOM = require('react-dom');
 
-ReactDOM.render(<Feed />, document.getElementById('app'));
+var app = document.getElementById('app');
+
+ReactDOM.render(<Feed/>, app);

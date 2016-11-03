@@ -98,7 +98,7 @@ var FeedList = React.createClass({displayName: "FeedList",
 
   render: function(){
     var feeditems = this.props.items.map(function(item){
-      return React.createElement(FeedItem, {title: item.description, desc: item.description})
+      return React.createElement(FeedItem, {title: item.title, desc: item.description})
     });
 
     return (
@@ -113,10 +113,10 @@ module.exports = FeedList;
 
 },{"./FeedItem":3,"react":177}],5:[function(require,module,exports){
 /** @jsx React.DOM */
-var React = require('react');
-var ShowAddButton = require('react');
 
-var FeedItem = React.createClass({displayName: "FeedItem",
+var React = require('react');
+
+var ShowAddButton = React.createClass({displayName: "ShowAddButton",
 
   render: function(){
     return (
@@ -136,7 +136,9 @@ var React = require('react'),
     Feed = require('./components/Feed'),
     ReactDOM = require('react-dom');
 
-ReactDOM.render(React.createElement(Feed, null), document.getElementById('app'));
+var app = document.getElementById('app');
+
+ReactDOM.render(React.createElement(Feed, null), app);
 
 },{"./components/Feed":1,"react":177,"react-dom":34}],7:[function(require,module,exports){
 (function (process){
