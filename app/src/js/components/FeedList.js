@@ -8,15 +8,21 @@ var React = require('react'),
 var FeedList = React.createClass({
 
   render: function(){
-    var feeditems = this.props.items.map(function(item){
-      return <FeedItem title={item.title} desc = {item.description} />
-    });
+    var feedItems = this.props.items.map(function(item){
+      return <FeedItem id={item.id}
+                       desc={item.description}
+                       title={item.title}
+                       voteCount={item.voteCount}
+                       onVote={this.props.onVote} />
 
+    }.bind(this));
     return (
+      <div className="container">
       <ul className="list-group">
-        {feeditems}
+      {feedItems}
       </ul>
-      );
+      </div>
+    );
   }
 });
 
