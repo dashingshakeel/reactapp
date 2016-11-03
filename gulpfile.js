@@ -8,7 +8,7 @@ var gulp = require('gulp'),
 
 
 gulp.task('browserify',function(){
-  gulp.src('./app/src/js/components/main.js')
+  gulp.src('./app/src/js/main.js')
       .pipe(browserify({transform: 'reactify'}))
       .pipe(gulp.dest('./app/dist/js'));
 });
@@ -42,7 +42,7 @@ gulp.task('html',function(){
 gulp.task('watch',function(){
   gulp.watch('app/dist/js/*.js',['js']);
   gulp.watch('app/index.html',['html']);
-  gulp.watch('app/src/js/**/*.js',['broswerify']);
+  gulp.watch('app/src/js/*.js',['broswerify']);
   
 });
 
