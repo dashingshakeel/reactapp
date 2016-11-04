@@ -4,18 +4,41 @@ var React = require('react'),
     ShowAddButton = require('./ShowAddButton'),
     FeedForm = require('./FeedForm'),
     FeedList = require('./FeedList'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    Firebase = require('firebase');
 
 var Feed = React.createClass({
 
+  loadData: function(){
+    var ref = new Firebase('https://dash-5c50d.firebaseio.com/feed');
+    ref.on('value',function(snap){
+      var items =[];
+      var sorted=[];
+
+      snap.forEach(function(itemSnap){
+        var item = itemSnap.val();
+        item.id = itemSnap.name();
+        items.push(item);
+      });
+
+      sorted =  _.sortBy(items,function(item){
+        return -item.voteCount;
+      });
+
+      this.setState({
+        items: sorted
+      });
+    }.bind(this));
+  },
+
+  componentDidMount: function(){
+    this.loadData();
+  },
+
   getInitialState: function(){
-    var FEED_ITEMS =[
-      { title: 'realtime adata',id: 1, description: 'firebase is cool',voteCount: 49},
-      { title: 'realtime not adata',id: 2, description: 'firebas',voteCount: 34},
-      {title: 'realtime yes adata', id: 3, description: 'is cool',voteCount: 15},
-    ];
+    
     return {
-      items: FEED_ITEMS,
+      items: [],
       formDisplayed: false
     }
   },
@@ -26,26 +49,13 @@ var Feed = React.createClass({
   },
 
   onNewItem: function(newItem){
-    var newItems = this.state.items.concat([newItem]);
-    this.setState({
-      items: newItems,
-      formDisplayed: false,
-      id: this.state.items.length
-    });
+     var ref = new Firebase('https://dash-5c50d.firebaseio.com/feed');
+     ref.push(newItem);
   },
 
   onVote: function(item){
-    var items = _.uniq(this.state.items);
-    var index = _.findIndex(items, function(feedItems){
-      return feedItems.id === item.id;
-
-    });
-    var oldObj = items[index];
-    var newItems = _.pull(items, oldObj);
-    newItems.push(item);
-    this.setState({
-      items: newItems
-    });
+    var ref = new Firebase('https://dash-5c50d.firebaseio.com/feed').child(item.id);
+        ref.update(item);
   },
 
   render: function(){
